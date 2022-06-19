@@ -1,8 +1,7 @@
 name: Run Updater - Update Korea subway stations data
 on:
-  workflow_run:
-    workflows: ["Build"]
-    types: [requested]
+  release:
+    types: [published]
 jobs:
   build:
 
