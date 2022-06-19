@@ -1,3 +1,4 @@
+from numpy import NaN
 import requests
 import pandas as pd
 import json
@@ -18,9 +19,11 @@ data = {
 }
 
 response = requests.post('http://datafile.seoul.go.kr/bigfile/iot/inf/nio_download.do?&useCache=false', headers=headers, data=data, verify=False)
-result = pd.read_excel(response.content)
+result = pd.read_excel(response.content, engine='openpyxl').dropna()
 keys = [key[0] for key in zip(result.keys())]
-stations_info = [ {keys[0]:data[0], keys[1]:data[1], keys[2]:data[2]} for data in zip(result[keys[0]], result[keys[1]], result[keys[2]]) ]
-
+stations_info = [   
+                    {keys[0]:data[0], keys[1]:data[1], keys[2]:data[2]}
+                    for data in zip(result[keys[0]], result[keys[1]], result[keys[2]])
+                ]
 with open("./seoul_stations.json", 'w') as file:
     json.dump(stations_info, file, ensure_ascii=False)
