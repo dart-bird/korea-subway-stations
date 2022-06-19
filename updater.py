@@ -22,7 +22,7 @@ response = requests.post('http://datafile.seoul.go.kr/bigfile/iot/inf/nio_downlo
 result = pd.read_excel(response.content, engine='openpyxl').dropna()
 keys = [key[0] for key in zip(result.keys())]
 stations_info = {"stationList":[   
-                    {keys[0]:data[0], keys[1]:data[1], keys[2]:data[2]}
+                    {keys[0]:int(data[0]), keys[1]:int(data[1]), keys[2]:str(data[2])}
                     for data in zip(result[keys[0]], result[keys[1]], result[keys[2]])
                 ]}
 with open("./seoul_stations.json", 'w') as file:
