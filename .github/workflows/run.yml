@@ -1,6 +1,7 @@
 name: Run Updater - Update Korea subway stations data
 on:
-  create:
+  schedule:
+    - cron:  '*/1 * * * *'
   
 jobs:
   build:
