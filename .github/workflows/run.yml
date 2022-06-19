@@ -33,6 +33,5 @@ jobs:
     - name: Push
       uses: ad-m/github-push-action@main
       with:
-        branch: 'main'
-        persist-credentials: false
-        fetch-depth: 0
+        github_token: ${{ secrets.GIT_TOKEN }}
+        branch: main
