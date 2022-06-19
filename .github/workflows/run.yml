@@ -34,4 +34,5 @@ jobs:
       uses: ad-m/github-push-action@main
       with:
         branch: 'main'
-        github_token: $ 
+        persist-credentials: false
+        fetch-depth: 0
