@@ -27,6 +27,7 @@ jobs:
         git config --local user.name "dart-bird(auto)"
         git add *.json
         git commit -m "Auto - Update Korea stations data"
+        
     - name: Push
       uses: ad-m/github-push-action@main
       with:
