@@ -2,6 +2,8 @@ from numpy import NaN
 import requests
 import pandas as pd
 import json
+import subprocess
+
 headers = {
     'Connection': 'keep-alive',
     'Upgrade-Insecure-Requests': '1',
@@ -25,5 +27,14 @@ stations_info = {"stationList":[
                     {keys[0]:int(data[0]), keys[1]:int(data[1]), keys[2]:str(data[2])}
                     for data in zip(result[keys[0]], result[keys[1]], result[keys[2]])
                 ]}
-with open("./seoul_stations.json", 'w') as file:
-    json.dump(stations_info, file, ensure_ascii=False)
+
+with open("./seoul_stations.json", 'r') as f1:
+    data = json.load(f1)
+
+if data!=stations_info:
+    with open("./seoul_stations.json", 'w') as f2:
+        json.dump(stations_info, f2, ensure_ascii=False)
+    subprocess.call(['python', 'commit_push.py'])
+else:
+    print('Nothing to update.')
+
