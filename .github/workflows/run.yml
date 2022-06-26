@@ -1,8 +1,8 @@
 name: Run Updater - Update Korea subway stations data
 on:
-  schedule:
-    - cron:  '0 */6 * * *'
-
+  push:
+    branches:
+      - main
 jobs:
   build:
 
@@ -26,11 +26,9 @@ jobs:
       run: |
         git config --local user.email "dartbird.yu@gmail.com"
         git config --local user.name "dart-bird(auto)"
+        
+        git remote add origin https://${{secrets.GIT_TOKEN}}@github.com/dart-bird/korea-subway-stations.git
+        git pull
         git add *.json
         git commit -m "Auto - Update Korea stations data"
-        
-    - name: Push
-      uses: ad-m/github-push-action@master
-      with:
-        github_token: ${{ secrets.GIT_TOKEN }}
-        branch: main
+        git push origin main -f
