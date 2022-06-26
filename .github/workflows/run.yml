@@ -28,7 +28,7 @@ jobs:
         git config --local user.name "dart-bird(auto)"
         git remote remove origin
         git remote add origin https://${{secrets.GIT_TOKEN}}@github.com/dart-bird/korea-subway-stations.git
-        git pull
+        git pull origin main
         git add *.json
         git commit -m "Auto - Update Korea stations data"
         git push origin main -f
