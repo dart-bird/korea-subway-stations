@@ -3,6 +3,8 @@ import requests
 import pandas as pd
 import json
 import subprocess
+import re
+from bs4 import BeautifulSoup
 
 headers = {
     'Connection': 'keep-alive',
@@ -13,10 +15,14 @@ headers = {
     'Accept-Language': 'es-ES,es;q=0.9',
 }
 
+response = requests.get('https://data.seoul.go.kr/dataList/OA-12764/F/1/datasetView.do')
+html = BeautifulSoup(response.content, 'html.parser')
+seq = re.findall(r'\d+', html.select("#fileTr_1 > td:nth-child(6) > a")[0]['href'])
+
 data = {
     "infId" : "OA-12764",
     "seqNo" : "",
-    "seq" : "4",
+    "seq" : str(seq),
     "infSeq" : "2"
 }
 
