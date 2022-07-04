@@ -17,7 +17,7 @@ headers = {
 
 response = requests.get('https://data.seoul.go.kr/dataList/OA-12764/F/1/datasetView.do')
 html = BeautifulSoup(response.content, 'html.parser')
-seq = re.findall(r'\d+', html.select("#fileTr_1 > td:nth-child(6) > a")[0]['href'])
+seq = re.findall(r'\d+', html.select("#fileTr_1 > td:nth-child(6) > a")[0]['href'])[0]
 
 data = {
     "infId" : "OA-12764",
