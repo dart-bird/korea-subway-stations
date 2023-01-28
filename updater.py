@@ -7,15 +7,24 @@ import re
 from bs4 import BeautifulSoup
 
 headers = {
+    'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
+    'Accept-Encoding': 'gzip, deflate, br',
+    'Accept-Language': 'ko-KR,ko;q=0.9,en-US;q=0.8,en;q=0.7',
+    'Cache-Control': 'max-age=0',
     'Connection': 'keep-alive',
+    'Host': 'data.seoul.go.kr',
+    'sec-ch-ua': '"Not_A Brand";v="99", "Google Chrome";v="109", "Chromium";v="109"',
+    'sec-ch-ua-mobile': '?0',
+    'sec-ch-ua-platform': "macOS",
+    'Sec-Fetch-Dest': 'document',
+    'Sec-Fetch-Mode': 'navigate',
+    'Sec-Fetch-Site': 'none',
+    'Sec-Fetch-User': '?1',
     'Upgrade-Insecure-Requests': '1',
-    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36',
-    'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3',
-    'Accept-Encoding': 'gzip, deflate',
-    'Accept-Language': 'es-ES,es;q=0.9',
+    'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/109.0.0.0 Safari/537.36'
 }
 
-response = requests.get('https://data.seoul.go.kr/dataList/OA-12764/F/1/datasetView.do')
+response = requests.get('https://data.seoul.go.kr/dataList/OA-12764/F/1/datasetView.do', headers=headers)
 html = BeautifulSoup(response.content, 'html.parser')
 seq = re.findall(r'\d+', html.select("#fileTr_1 > td:nth-child(6) > a")[0]['href'])[0]
 
@@ -43,4 +52,3 @@ if data!=stations_info:
     subprocess.call(['python', 'commit_push.py'])
 else:
     print('Nothing to update.')
-
